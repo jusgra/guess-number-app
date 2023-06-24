@@ -1,109 +1,103 @@
 var guessRange = 100;
-var generatedNumber = Math.floor(Math.random() * guessRange) + 1;
-var userGuess;
-var currentGuessesArray = [];
+var generatedNumber;
+var currentGuessesArray;
 var numberOfGuesses;
-var hasGameEnded = false;
+var userTriesString;
 
-numberOfGuesses = 0;
-
-var triesString = "";
-
-console.log("answer is - " + generatedNumber);
+startGame();
 
 $(".popup-button").click(function (e) {
   e.preventDefault();
-  $(".popup-content").toggleClass("popup-animation-show");
-  $(".popup-background").toggleClass("popup-background-show");
 
+  $(".popup-container").toggleClass("popup-animation-show");
+  $(".popup-background").toggleClass("popup-background-show");
   $(".button-submit").removeAttr("disabled", "");
+});
+
+$(".guess-form").submit(function (e) {
+  e.preventDefault();
+
+  numberOfGuesses += 1;
+
+  var userGuess = $(".guess-input").val();
+  currentGuessesArray.push(userGuess);
+
+  updateGuessesList();
+
+  $(".hint-text").addClass("hint-open");
+
+  if (numberOfGuesses == 1) {
+    userTriesString += userGuess;
+  } else if (numberOfGuesses > 1) {
+    userTriesString += ", " + userGuess;
+  }
+  $(".tries-array").text(userTriesString);
+
+  if (userGuess == generatedNumber) endGame();
+  else if (userGuess > generatedNumber) $(".hint-text").html("too&nbsp;<span class='toHigh'>high</span>");
+  else if (userGuess < generatedNumber) $(".hint-text").html("too&nbsp;<span class='toLow'>low</span>");
+
+  $(".guess-input").val("");
 });
 
 $(".button-restart").click(function (e) {
   e.preventDefault();
+
+  startGame();
   $(".guess-container").toggle();
+  $(".tries-text").toggle();
+});
+
+function startGame() {
   generatedNumber = Math.floor(Math.random() * guessRange) + 1;
-  console.log("answer is - " + generatedNumber);
   currentGuessesArray = [];
   numberOfGuesses = 0;
-
-  $(".tries-text").toggle();
+  userTriesString = "";
+  console.log("answer is - " + generatedNumber);
 
   $(".tries-one").text("");
   $(".tries-two").text("");
   $(".tries-three").text("");
 
-  triesString = "";
-  $(".tries-array").text(triesString);
+  $(".tries-array").text(userTriesString);
 
   $(".guess").val("");
   $(".guess").focus();
-});
+}
 
-$("form").submit(function (e) {
-  e.preventDefault();
-  // $(".button-submit").attr("disabled", "");
+function updateGuessesList() {
+  var tryOne = $(".tries-one");
+  var tryTwo = $(".tries-two");
+  var tryThree = $(".tries-three");
 
-  // if (hasGameEnded) {
-  //   generatedNumber = Math.floor(Math.random() * guessRange) + 1;
-  // } else {
-  // }
-
-  numberOfGuesses += 1;
-  userGuess = $(".guess").val();
-  currentGuessesArray.push(userGuess);
   switch (numberOfGuesses) {
     case 1:
       $(".tries-text").toggle();
-      $(".tries-one").addClass("tries-span3");
-      $(".tries-numbers>p").addClass("tries-bottom");
+      tryOne.addClass("tries-span3");
       break;
     case 2:
-      $(".tries-one").removeClass("tries-span3");
-      $(".tries-one").addClass("tries-span2");
-      $(".tries-two").addClass("tries-span2");
+      tryOne.removeClass("tries-span3");
+      tryOne.addClass("tries-span2");
+      tryTwo.addClass("tries-span2");
       break;
     case 3:
-      $(".tries-one").removeClass("tries-span2");
+      tryOne.removeClass("tries-span2");
       break;
   }
 
-  $(".tries-one").text(currentGuessesArray[numberOfGuesses - 1]);
-  $(".tries-two").text(currentGuessesArray[numberOfGuesses - 2]);
-  $(".tries-three").text(currentGuessesArray[numberOfGuesses - 3]);
-
-  $(".hint-text").addClass("closed");
-  var stringas = $(".hint-text").html();
-
-  if (numberOfGuesses == 1) {
-    triesString += userGuess;
-  } else if (numberOfGuesses > 1) {
-    triesString += ", " + userGuess;
-  }
-
-  if (userGuess == generatedNumber) {
-    endGame();
-  } else if (userGuess > generatedNumber) {
-    $(".hint-text").html("too&nbsp;<span class='toHigh'>high</span>");
-  } else if (userGuess < generatedNumber) {
-    $(".hint-text").html("too&nbsp;<span class='toLow'>low</span>");
-  }
-
-  $(".guess").val("");
-
-  $(".tries-array").text(triesString);
-});
-$("form").click(function (e) {});
+  tryOne.text(currentGuessesArray[numberOfGuesses - 1]);
+  tryTwo.text(currentGuessesArray[numberOfGuesses - 2]);
+  tryThree.text(currentGuessesArray[numberOfGuesses - 3]);
+}
 
 function endGame() {
-  hasGameEnded = true;
-  $(".popup-content").toggleClass("popup-animation-show");
+  $(".popup-container").toggleClass("popup-animation-show");
   $(".popup-background").toggleClass("popup-background-show");
 
   $(".popup-number").text(generatedNumber);
   $(".popup-tries").text(numberOfGuesses);
 
-  $(".hint-text").removeClass("closed");
+  $(".hint-text").removeClass("hint-open");
   $(".button-submit").attr("disabled", "");
 
   $(".guess-container").toggle();
