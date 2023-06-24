@@ -1,0 +1,370 @@
+body {
+    margin: 0;
+    background-color: #0F6292;
+
+}
+
+p {
+    font-family: 'Press Start 2P', cursive;
+    color: #FFED00;
+    margin: 0;
+    padding: 0;
+}
+
+.container>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    display: block;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.container {
+    margin: 0;
+    display: grid;
+    grid-template: 0.5fr 0.5fr 1fr 1fr / 1fr 1fr 1fr;
+    height: 100vh;
+}
+
+.guess-container {
+    grid-area: 3/2/4/3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.guess-container>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form>* {
+    border: none;
+    padding: 0;
+
+}
+
+.guess {
+    height: 80%;
+    width: 100%;
+    background-color: #000000;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+    margin-bottom: 5px;
+    color: #FFED00;
+    font-size: 5rem;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.guess-restart {
+    font-size: 3rem;
+}
+
+input::placeholder {
+    color: #ffee0044;
+    font-size: 5rem;
+    text-align: center;
+}
+
+input:focus {
+    outline: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.button-submit {
+    display: block;
+    background-color: #000000;
+    width: 100%;
+    height: 20%;
+    border-radius: 0 0 20px 20px;
+    color: #16FF00;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    z-index: 1;
+}
+
+/* .button-restart {
+    grid-area: 3/2/4/3;
+    background-color: #000000;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    color: #16FF00;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    z-index: 1;
+} */
+
+.button-hide {
+    display: none;
+}
+
+.button-submit:hover {
+    background-color: #00000083;
+
+}
+
+.title {
+    grid-area: 1/1/3/-1;
+    padding: 0 10%;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 4rem;
+    color: #FFED00;
+}
+
+/* -------------- HINT -------------- */
+
+.hint-container {
+    margin: auto;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    grid-area: 2/2/3/3;
+}
+
+.hint-text {
+    font-family: 'Press Start 2P', cursive;
+    position: absolute;
+    bottom: calc(-40% - 2px);
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+    margin-bottom: 2px;
+    border-radius: 20px 20px 0 0;
+    background-color: #202020;
+    color: #FFED00;
+    width: 80%;
+    height: 40%;
+    transition: bottom 0.3s;
+}
+
+.hint-text>span {
+    font-size: 2.5rem;
+}
+
+.closed {
+    bottom: 0;
+    transition: bottom 0.3s;
+}
+
+.toLow {
+    color: white;
+}
+
+.toHigh {
+    color: red;
+}
+
+/* -------------- TRIES GRID SYSTEM -------------- */
+
+.tries-container {
+    grid-area: 4/2/5/3;
+    grid-column: span 3;
+    width: 100%;
+    height: 100%;
+}
+
+.tries-numbers {
+    position: relative;
+    display: grid;
+    grid-template: 1fr 1fr / 1fr 0.5fr 0.5fr 1fr;
+    background-color: #000000;
+    height: 60%;
+    width: 50%;
+    border: 10px solid rgb(54, 54, 54);
+    border-radius: 20px;
+    text-align: center;
+    color: #FFED00;
+    font-family: 'Press Start 2P', cursive;
+
+
+}
+
+.tries-numbers>* {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tries-numbers>div {
+    /* margin-top: 20px; */
+}
+
+.tries-one {
+    font-size: 3rem;
+    color: #ffee00;
+}
+
+.tries-two {
+    font-size: 2rem;
+    /* grid-column: span 2; */
+    color: #fff786;
+}
+
+.tries-three {
+    font-size: 1.5rem;
+    color: #ffffff8c;
+}
+
+.tries-array {
+    margin: 10px 0;
+    color: #ffffff57;
+    font-size: 1rem;
+    grid-area: 2/1/3/5;
+    width: 100%;
+    max-height: 150px;
+    white-space: normal;
+    overflow: auto;
+    text-overflow: clip;
+    line-height: 1.3rem;
+}
+
+.tries-span3 {
+    grid-column: span 4;
+}
+
+.tries-span2 {
+    grid-column: span 2;
+}
+
+.tries-span1 {
+    grid-column: span 2;
+}
+
+.tries-bottom {
+    grid-area: 2/1/3/5;
+}
+
+.tries-text {
+    /* position: absolute; */
+    grid-area: 1/1/-1/-1;
+    font-size: 3rem;
+
+}
+
+/* -------------- POPUP -------------- */
+
+.popup-background {
+    visibility: hidden;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000000bb;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.popup-background-show {
+    visibility: visible;
+    opacity: 1;
+}
+
+#popup-container {
+    position: fixed;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #16FF00;
+    border-radius: 20px;
+    z-index: 2;
+    border: 10px solid rgb(0, 0, 0);
+}
+
+.popup-content {
+    visibility: hidden;
+
+}
+
+#popup-container p {
+    text-align: center;
+    color: #000000;
+}
+
+#popup-container>div {
+    margin-top: 20px;
+}
+
+.popup-button {
+    background-color: #000000;
+    width: 50%;
+    height: 20%;
+    border-radius: 20px;
+    color: #F9E0BB;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.popup-animation-show {
+    visibility: visible;
+    animation-name: slideup;
+    animation-duration: 0.3s;
+}
+
+@keyframes slideup {
+    0% {
+        top: 65%;
+        opacity: 0;
+    }
+
+    50% {
+        top: 45%;
+        opacity: 0.9;
+    }
+
+    100% {
+        top: 50%;
+        opacity: 1;
+    }
+}
+
+
+
+.popup-congrats {
+    font-size: 2.5rem;
+}
+
+.popup-guess {
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
+.popup-number {
+    margin: 40px 0 20px;
+    color: #0F6292 !important;
+    font-size: 5rem;
+}
+
+.popup-done {
+    font-size: 2rem;
+}
+
+.popup-tries {
+    color: #0F6292;
+}
