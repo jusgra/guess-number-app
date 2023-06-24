@@ -4,12 +4,15 @@ var currentGuessesArray;
 var numberOfGuesses;
 var userTriesString;
 
+// $(".popup-container").toggleClass("popup-container-show");
+// $(".popup-background").toggleClass("popup-background-show");
+
 startGame();
 
 $(".popup-button").click(function (e) {
   e.preventDefault();
 
-  $(".popup-container").toggleClass("popup-animation-show");
+  $(".popup-container").toggleClass("popup-container-show");
   $(".popup-background").toggleClass("popup-background-show");
   $(".button-submit").removeAttr("disabled", "");
 });
@@ -24,7 +27,7 @@ $(".guess-form").submit(function (e) {
 
   updateGuessesList();
 
-  $(".hint-text").addClass("hint-open");
+  $(".hint-text").addClass("hint-show");
 
   if (numberOfGuesses == 1) {
     userTriesString += userGuess;
@@ -40,11 +43,11 @@ $(".guess-form").submit(function (e) {
   $(".guess-input").val("");
 });
 
-$(".button-restart").click(function (e) {
+$(".restart-button").click(function (e) {
   e.preventDefault();
 
   startGame();
-  $(".guess-container").toggle();
+  $(".guess-form").toggle();
   $(".tries-text").toggle();
 });
 
@@ -91,14 +94,15 @@ function updateGuessesList() {
 }
 
 function endGame() {
-  $(".popup-container").toggleClass("popup-animation-show");
+  $(".popup-container").toggleClass("popup-container-show");
   $(".popup-background").toggleClass("popup-background-show");
 
   $(".popup-number").text(generatedNumber);
   $(".popup-tries").text(numberOfGuesses);
 
-  $(".hint-text").removeClass("hint-open");
+  $(".hint-text").removeClass("hint-show");
   $(".button-submit").attr("disabled", "");
 
-  $(".guess-container").toggle();
+  // $(".guess-container").toggle();
+  $(".guess-form").toggle();
 }
