@@ -9,9 +9,7 @@ var userToLowTriesString;
 var userToHighTriesString;
 var userGuess;
 
-// $(".popup-container").toggleClass("popup-container-show");
-// $(".popup-background").toggleClass("popup-background-show");
-
+// $(".tries").toggle();
 // $(".tries-text").toggle();
 
 startGame();
@@ -22,6 +20,8 @@ $(".popup-button").click(function (e) {
   $(".popup-container").toggleClass("popup-container-show");
   $(".popup-background").toggleClass("popup-background-show");
   $(".button-submit").removeAttr("disabled", "");
+
+  $(".guess-form").toggle();
 });
 
 $(".restart-button").click(function (e) {
@@ -34,36 +34,23 @@ $(".restart-button").click(function (e) {
 
 $(".guess-form").submit(function (e) {
   e.preventDefault();
-
   numberOfGuesses += 1;
 
   userGuess = $(".guess-input").val();
   currentGuessesArray.push(userGuess);
 
-  $(".hint-text").addClass("hint-show");
-
   if (userGuess == generatedNumber) endGame();
   else if (userGuess > generatedNumber) {
-    $(".hint-text").html("too&nbsp;<span class='to-high'>high</span>");
+    showHint(true);
     toHighArray.push(userGuess);
-    if (toHighArray.length == 1) {
-      userToHighTriesString += userGuess;
-    } else if (numberOfGuesses > 1) {
-      userToHighTriesString += ", " + userGuess;
-    }
   } else if (userGuess < generatedNumber) {
-    $(".hint-text").html("too&nbsp;<span class='to-low'>low</span>");
+    showHint(false);
     toLowArray.push(userGuess);
-    if (toLowArray.length == 1) {
-      userToLowTriesString += userGuess;
-    } else if (numberOfGuesses > 1) {
-      userToLowTriesString += ", " + userGuess;
-    }
   }
 
   updateGuessesList();
 
-  // $(".guess-input").val("");
+  $(".guess-input").val("");
 });
 
 function startGame() {
@@ -77,57 +64,54 @@ function startGame() {
   userToHighTriesString = "";
   console.log("answer is - " + generatedNumber);
 
-  $(".tries-one").text("");
-  $(".tries-two").text("");
-  $(".tries-three").text("");
+  $(".tries-too-high").text("");
+  $(".tries-recent").text("");
+  $(".tries-all").text("");
+  $(".tries-too-low").text("");
 
-  $(".tries-range").toggle();
-
-  $(".tries-array").text(userTriesString);
+  $(".tries").toggle();
 
   $(".guess").val("");
   $(".guess").focus();
+}
 
-  $(".tries-too-high").text("");
-  $(".tries-too-low").text("");
+function showHint(isGuessHigher) {
+  $(".hint-text").addClass("hint-show");
+  if (isGuessHigher) $(".hint-text").html("too&nbsp;<span class='too-high'>high</span>");
+  else $(".hint-text").html("too&nbsp;<span class='too-low'>low</span>");
 }
 
 function updateGuessesList() {
-  var tryOne = $(".tries-one");
-  var tryTwo = $(".tries-two");
-  var tryThree = $(".tries-three");
+  var tryRecent = $(".tries-recent");
   var tryHigh = $(".tries-too-high");
   var tryLow = $(".tries-too-low");
+  var tryText = $(".tries-text");
+  var tries = $(".tries");
+  var tryAll = $(".tries-all");
 
   if (numberOfGuesses == 1) {
-    $(".tries-text").toggle();
-    $(".tries-range").toggle();
+    tryText.toggle();
+    tries.toggle();
   }
+
+  userTriesString = currentGuessesArray.join(", ");
+
+  //sorts array in decending order and puts all elements in a string
+  toLowArray.sort((a, b) => {
+    return b - a;
+  });
+  userToLowTriesString = toLowArray.join(", ");
+
+  //sorts array in decending order and puts all elements in a string
+  toHighArray.sort((a, b) => {
+    return b - a;
+  });
+  userToHighTriesString = toHighArray.join(", ");
 
   tryLow.text(userToLowTriesString);
   tryHigh.text(userToHighTriesString);
-
-  tryOne.text(currentGuessesArray[numberOfGuesses - 1]);
-  tryTwo.text(currentGuessesArray[numberOfGuesses - 2]);
-  tryThree.text(currentGuessesArray[numberOfGuesses - 3]);
-
-  if (numberOfGuesses == 1) {
-    userTriesString += userGuess;
-  } else if (numberOfGuesses > 1) {
-    userTriesString += ", " + userGuess;
-  }
-
-  // if (numberOfGuesses == 1) {
-  //   userToLowTriesString += userGuess;
-  // } else if (numberOfGuesses > 1) {
-  //   userTriesString += ", " + userGuess;
-  // }
-
-  $(".tries-array").text(userTriesString);
-
-  // array1.sort(function (a, b) {
-  //   return a - b;
-  // });
+  tryRecent.text(currentGuessesArray[numberOfGuesses - 1]);
+  tryAll.text(userTriesString);
 }
 
 function endGame() {
@@ -139,7 +123,4 @@ function endGame() {
 
   $(".hint-text").removeClass("hint-show");
   $(".button-submit").attr("disabled", "");
-
-  // $(".guess-container").toggle();
-  $(".guess-form").toggle();
 }

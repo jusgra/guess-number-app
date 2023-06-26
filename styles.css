@@ -44,7 +44,7 @@ button:hover {
     align-items: flex-start;
 }
 
-/* ----------- GUESS INPUT --------------- */
+/* -------------- GUESS INPUT --------------- */
 
 .guess-form {
     height: 100%;
@@ -106,7 +106,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-/* -------------- HINT ------------------- */
+/* ----------------- HINT ------------------- */
 
 .hint-text {
     font-family: 'Press Start 2P', cursive;
@@ -134,15 +134,15 @@ input::-webkit-inner-spin-button {
     transition: top 0.3s;
 }
 
-.to-low {
-    color: white;
+.too-low {
+    color: rgba(255, 255, 255, 0.7);
 }
 
-.to-high {
-    color: red;
+.too-high {
+    color: rgba(255, 0, 0, 0.7);
 }
 
-/* -------- TRIES GRID SYSTEM ------------ */
+/* ----------- TRIES GRID SYSTEM ------------ */
 
 .tries-container {
     grid-column: span 3;
@@ -151,15 +151,13 @@ input::-webkit-inner-spin-button {
 }
 
 .tries-numbers {
-    position: relative;
     display: grid;
-    grid-template: 0.5fr 1fr / repeat(4, 1fr);
+    grid-template: 1fr 200px / repeat(4, 1fr);
     background-color: #000000;
     border: 10px solid rgb(54, 54, 54);
     height: 90%;
     width: 70%;
     border-radius: 20px;
-    text-align: center;
     color: #FFED00;
     font-family: 'Press Start 2P', cursive;
 }
@@ -170,64 +168,36 @@ input::-webkit-inner-spin-button {
     align-items: center;
 }
 
-.tries-one {
-    grid-area: 1/2/2/4;
-    font-size: 3rem;
-    color: #fff786;
-}
-
-.tries-two {
-    /* grid-area: 1/3/3/5; */
-    font-size: 2rem;
-    color: #fff786;
-}
-
-.tries-three {
-    /* grid-area: 1/5/3/6; */
-    font-size: 1.5rem;
-    color: #ffffff8c;
-}
-
-.tries-array {
-    /* margin: 10px 0; */
-    color: #ffffff57;
-    font-size: 1rem;
-    grid-area: 2/2/3/4;
-    width: 100%;
-    max-height: 150px;
-    white-space: normal;
-    overflow: auto;
-    text-overflow: clip;
-    line-height: 1.3rem;
-}
-
-.tries-span3 {
-    grid-column: span 4;
-    /* grid-area: 1/2/3/6; */
-}
-
-.tries-span2 {
-    grid-column: span 2;
-}
-
 .tries-text {
     grid-area: 1/1/-1/-1;
     font-size: 4rem;
     color: #ffee0044;
 }
 
-.tries-range-title-th {
+.tries-th-title {
     grid-area: 1/1/2/2;
+    font-size: 1.5rem;
     border-right: 4px solid rgb(54, 54, 54);
 }
 
 .tries-too-high {
-
     grid-area: 2/1/3/2;
     border-right: 4px solid rgb(54, 54, 54);
 }
 
-.tries-range-title-tl {
+.tries-recent {
+    grid-area: 1/2/2/4;
+    font-size: 3rem;
+    color: #fff786;
+}
+
+.tries-all {
+    color: #ffffff57;
+    grid-area: 2/2/3/4;
+}
+
+.tries-tl-title {
+    font-size: 1.5rem;
     grid-area: 1/4/2/-1;
     border-left: 4px solid rgb(54, 54, 54);
 }
@@ -237,26 +207,14 @@ input::-webkit-inner-spin-button {
     border-left: 4px solid rgb(54, 54, 54);
 }
 
-
 .tries-range {
-    max-height: 150px;
-    white-space: normal;
+    padding: 5%;
+    font-size: 0.8rem;
     overflow: auto;
-    text-overflow: clip;
     line-height: 1.3rem;
 }
 
-
-.tries-too-high {
-    /* grid-area: 2/1/4/2; */
-}
-
-.tries-too-low {
-    /* grid-area: 2/6/4/7; */
-}
-
-
-/* --------- POPUP BACKGROUND ------------ */
+/* ------------ POPUP BACKGROUND ------------ */
 
 .popup-background {
     visibility: hidden;
@@ -274,7 +232,7 @@ input::-webkit-inner-spin-button {
     opacity: 1;
 }
 
-/* -------------- POPUP ------------------ */
+/* ----------------- POPUP ------------------ */
 
 .popup-container {
     visibility: hidden;
