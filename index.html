@@ -24,12 +24,15 @@
       </div>
 
       <div class="title">
-        <p>Guess the number between 1 and 100</p>
+        <!-- <p>
+          Guess the number <br />
+          between 1 and 100
+        </p> -->
       </div>
 
       <form class="guess-form">
-        <div class="hint-text">too&nbsp;<span class="toHigh">high</span></div>
-        <input class="guess-input" type="number" required placeholder="guess" />
+        <div class="hint-text">too&nbsp;<span class="to-high">high</span></div>
+        <input class="guess-input" type="number" required placeholder="guess" min="0" max="100" />
         <button class="guess-button" type="submit">submit</button>
       </form>
 
@@ -40,11 +43,13 @@
 
       <div class="tries-container">
         <div class="tries-numbers">
-          <div class="tries-text">Your guesses</div>
-          <div class="tries-one"></div>
-          <div class="tries-two"></div>
-          <div class="tries-three"></div>
-          <p class="tries-array"></p>
+          <div class="tries-text">your guesses</div>
+          <div class="tries-range-title-th tries-range">too&nbsp;<span class="to-high">high</span></div>
+          <div class="tries-too-low tries-range to-low">999, 999, 999, 999, 999, 999, 999, 999</div>
+          <div class="tries-range-title-tl tries-range">too&nbsp;<span class="to-low">low</span></div>
+          <div class="tries-too-high tries-range to-high">999, 999, 999, 999, 999, 999</div>
+          <div class="tries-one">999</div>
+          <div class="tries-array">999, 999, 999, 999</div>
         </div>
       </div>
     </div>
