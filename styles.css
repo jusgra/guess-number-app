@@ -1,3 +1,7 @@
+:root {
+    --grid-height: 100%;
+}
+
 body {
     margin: 0;
     background-color: #0F6292;
@@ -10,12 +14,6 @@ p {
     padding: 0;
 }
 
-.main-container>* {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 button:hover {
     cursor: pointer;
     background-color: #000000a9;
@@ -24,25 +22,46 @@ button:hover {
 .main-container {
     margin: 0;
     display: grid;
-    grid-template: 0.5fr 0.5fr 1fr 1fr / 1fr 1fr 1fr;
+    grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
     height: 100vh;
 }
 
-.guess-container {
-    grid-area: 3/2/4/3;
-    flex-direction: column;
-}
-
-.guess-container>* {
+.main-container>* {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.title {
+    grid-column: span 3;
+
+    padding: 0 7%;
+    padding-top: 3%;
+    text-align: center;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 4rem;
+    color: #FFED00;
+    align-items: flex-start;
+}
+
+/* -------------- GUESS INPUT --------------- */
+
+.guess-form {
+    height: 100%;
+    width: 100%;
+    grid-area: 2/2/3/3;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+}
+
+.guess-form>* {
     border: none;
     padding: 0;
 }
 
 .guess-input {
-    height: 80%;
+    height: 50%;
     width: 100%;
     background-color: #000000;
     border-radius: 20px 20px 0 0;
@@ -53,8 +72,23 @@ button:hover {
     font-family: 'Press Start 2P', cursive;
 }
 
-.guess-restart {
+.guess-button {
+    background-color: #000000;
+    width: 100%;
+    height: 20%;
+    border-radius: 0 0 20px 20px;
+    color: #F9E0BB;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    z-index: 1;
+}
+
+.restart-div {
     font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 input::placeholder {
@@ -72,88 +106,58 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-.button-submit {
-    background-color: #000000;
-    width: 100%;
-    height: 20%;
-    border-radius: 0 0 20px 20px;
-    color: #16FF00;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 2rem;
-    transition: background-color 0.3s;
-    z-index: 1;
-}
-
-.title {
-    grid-area: 1/1/3/-1;
-    padding: 0 10%;
-    text-align: center;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 4rem;
-    color: #FFED00;
-}
-
-/* -------------- HINT ------------------- */
-
-.hint-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    grid-area: 2/2/3/3;
-}
+/* ----------------- HINT ------------------- */
 
 .hint-text {
     font-family: 'Press Start 2P', cursive;
     position: absolute;
-    bottom: calc(-40% - 2px);
+    top: 0;
     font-size: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: -1;
-    margin-bottom: 2px;
     border-radius: 20px 20px 0 0;
     background-color: #202020;
     color: #FFED00;
     width: 80%;
-    height: 40%;
-    transition: bottom 0.3s;
+    height: 20%;
+    transition: top 0.3s;
 }
 
 .hint-text>span {
     font-size: 2.5rem;
 }
 
-.hint-open {
-    bottom: 0;
-    transition: bottom 0.3s;
+.hint-show {
+    top: calc(-20% - 2px);
+    transition: top 0.3s;
 }
 
-.toLow {
-    color: white;
+.too-low {
+    color: rgba(255, 255, 255, 0.7);
 }
 
-.toHigh {
-    color: red;
+.too-high {
+    color: rgba(255, 0, 0, 0.7);
 }
 
-/* -------------- TRIES GRID SYSTEM ------ */
+/* ----------- TRIES GRID SYSTEM ------------ */
 
 .tries-container {
-    grid-area: 4/2/5/3;
     grid-column: span 3;
+    height: 100%;
+    width: 100%;
 }
 
 .tries-numbers {
-    position: relative;
     display: grid;
-    grid-template: 1fr 1fr / 1fr 0.5fr 0.5fr 1fr;
+    grid-template: 1fr 200px / repeat(4, 1fr);
     background-color: #000000;
-    height: 60%;
-    width: 50%;
     border: 10px solid rgb(54, 54, 54);
+    height: 90%;
+    width: 70%;
     border-radius: 20px;
-    text-align: center;
     color: #FFED00;
     font-family: 'Press Start 2P', cursive;
 }
@@ -164,49 +168,53 @@ input::-webkit-inner-spin-button {
     align-items: center;
 }
 
-.tries-one {
-    font-size: 3rem;
-    color: #ffee00;
+.tries-text {
+    grid-area: 1/1/-1/-1;
+    font-size: 4rem;
+    color: #ffee0044;
 }
 
-.tries-two {
-    font-size: 2rem;
+.tries-th-title {
+    grid-area: 1/1/2/2;
+    font-size: 1.5rem;
+    border-right: 4px solid rgb(54, 54, 54);
+}
+
+.tries-too-high {
+    grid-area: 2/1/3/2;
+    border-right: 4px solid rgb(54, 54, 54);
+}
+
+.tries-recent {
+    grid-area: 1/2/2/4;
+    font-size: 3rem;
     color: #fff786;
 }
 
-.tries-three {
-    font-size: 1.5rem;
-    color: #ffffff8c;
+.tries-all {
+    color: #ffffff57;
+    grid-area: 2/2/3/4;
 }
 
-.tries-array {
-    margin: 10px 0;
-    color: #ffffff57;
-    font-size: 1rem;
-    grid-area: 2/1/3/5;
-    width: 100%;
-    height: 80px;
-    white-space: normal;
+.tries-tl-title {
+    font-size: 1.5rem;
+    grid-area: 1/4/2/-1;
+    border-left: 4px solid rgb(54, 54, 54);
+}
+
+.tries-too-low {
+    grid-area: 2/4/3/5;
+    border-left: 4px solid rgb(54, 54, 54);
+}
+
+.tries-range {
+    padding: 5%;
+    font-size: 0.8rem;
     overflow: auto;
-    text-overflow: clip;
     line-height: 1.3rem;
 }
 
-.tries-span3 {
-    grid-column: span 4;
-}
-
-.tries-span2 {
-    grid-column: span 2;
-}
-
-.tries-text {
-    grid-area: 1/1/-1/-1;
-    font-size: 3rem;
-
-}
-
-/* -------------- POPUP ------------------ */
+/* ------------ POPUP BACKGROUND ------------ */
 
 .popup-background {
     visibility: hidden;
@@ -224,11 +232,13 @@ input::-webkit-inner-spin-button {
     opacity: 1;
 }
 
+/* ----------------- POPUP ------------------ */
+
 .popup-container {
     visibility: hidden;
     position: fixed;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     flex-direction: column;
     top: 50%;
     left: 50%;
@@ -241,29 +251,7 @@ input::-webkit-inner-spin-button {
     border: 10px solid rgb(0, 0, 0);
 }
 
-.popup-container p {
-    text-align: center;
-    color: #000000;
-}
-
-.popup-container>div {
-    margin-top: 20px;
-}
-
-.popup-button {
-    background-color: #000000;
-    width: 50%;
-    height: 20%;
-    border-radius: 20px;
-    color: #F9E0BB;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 2rem;
-    transition: background-color 0.3s;
-    border: none;
-    margin-bottom: 10px;
-}
-
-.popup-animation-show {
+.popup-container-show {
     visibility: visible;
     animation-name: slideup;
     animation-duration: 0.3s;
@@ -286,17 +274,31 @@ input::-webkit-inner-spin-button {
     }
 }
 
+.popup-button {
+    background-color: #000000;
+    width: 50%;
+    height: 20%;
+    border-radius: 20px;
+    color: #F9E0BB;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+.popup-container p {
+    color: #000000;
+}
+
 .popup-congrats {
     font-size: 2.5rem;
 }
 
 .popup-guess {
-    margin-top: 20px;
     font-size: 1.5rem;
 }
 
 .popup-number {
-    margin: 40px 0 20px;
     color: #0F6292 !important;
     font-size: 5rem;
 }

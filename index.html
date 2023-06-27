@@ -3,47 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Guess the Number</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://em-content.zobj.net/thumbs/120/apple/354/exclamation-question-mark_2049-fe0f.png"
+    />
     <link rel="stylesheet" href="./styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div class="main-container">
       <div class="popup-background"></div>
-      <div class="popup-container popup-container-hide">
-        <div>
-          <p class="popup-congrats">Congratulations!</p>
-          <p class="popup-guess">You guessed the number</p>
-          <p class="popup-number">969519</p>
-          <p class="popup-done">in <span class="popup-tries">99</span> tries - Well Done!</p>
-        </div>
+      <div class="popup-container">
+        <p class="popup-congrats">Congratulations!</p>
+        <p class="popup-guess">You guessed the number</p>
+        <p class="popup-number">969519</p>
+        <p class="popup-done">in <span class="popup-tries">99</span> tries - Well Done!</p>
         <button class="popup-button" type="submit">thanks</button>
       </div>
 
       <div class="title">
-        <p>Guess the number between 1 and 100</p>
+        <p>
+          Guess the number <br />
+          between 1 and 100
+        </p>
       </div>
 
-      <form class="guess-form guess-container">
-        <input class="guess-input" type="number" required placeholder="guess" />
-        <button class="button-submit" type="submit">submit</button>
+      <form class="guess-form">
+        <div class="hint-text">too&nbsp;<span class="to-high">high</span></div>
+        <input class="guess-input" type="number" required placeholder="guess" min="0" max="100" />
+        <button class="guess-button" type="submit">submit</button>
       </form>
-      <div class="guess-container" style="display: none">
-        <div class="guess-input guess-restart">restart?</div>
-        <button class="button-submit button-restart" type="submit">yes</button>
-      </div>
 
-      <div class="hint-container">
-        <div class="hint-text">too low</div>
+      <div class="guess-form" style="display: none">
+        <div class="guess-input restart-div">restart?</div>
+        <button class="guess-button restart-button">yes</button>
       </div>
 
       <div class="tries-container">
         <div class="tries-numbers">
-          <div class="tries-text">Your guesses</div>
-          <div class="tries-one"></div>
-          <div class="tries-two"></div>
-          <div class="tries-three"></div>
-          <p class="tries-array"></p>
+          <div class="tries-text">your guesses</div>
+          <div class="tries tries-th-title">too&nbsp;<span class="too-high">high</span></div>
+          <div class="tries tries-too-high too-high tries-range">100, 99, 88</div>
+          <div class="tries tries-recent">58</div>
+          <div class="tries tries-all tries-range">5, 9, 15, 58, 12, 60, 47, 49</div>
+          <div class="tries tries-tl-title">too&nbsp;<span class="too-low">low</span></div>
+          <div class="tries tries-too-low too-low tries-range">10, 9, 8, 7</div>
         </div>
       </div>
     </div>
