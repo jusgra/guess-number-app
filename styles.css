@@ -19,6 +19,8 @@ button:hover {
     background-color: #000000a9;
 }
 
+
+
 .main-container {
     margin: 0;
     display: grid;
@@ -42,6 +44,26 @@ button:hover {
     font-size: 4rem;
     color: #FFED00;
     align-items: flex-start;
+}
+
+/* -------------- HS TABLE --------------- */
+
+.table-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+td,
+th {
+    /* border: 2px solid white; */
+    background-color: #000000;
+    color: white;
+}
+
+table {
+    width: 100%;
+    height: 100%;
 }
 
 /* -------------- GUESS INPUT --------------- */
@@ -242,13 +264,14 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
     top: 50%;
     left: 50%;
-    width: 60%;
+    width: 70%;
     height: 50%;
     transform: translate(-50%, -50%);
     background-color: #16FF00;
     border-radius: 20px;
     z-index: 4;
     border: 10px solid rgb(0, 0, 0);
+    text-align: center;
 }
 
 .popup-container-show {
@@ -307,6 +330,8 @@ input::-webkit-inner-spin-button {
     font-size: 2rem;
 }
 
-.popup-tries {
+.popup-tries,
+.popup-time {
     color: #0F6292;
+    font-size: 2.5rem;
 }

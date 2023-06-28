@@ -8,6 +8,102 @@ var userTriesString;
 var userToLowTriesString;
 var userToHighTriesString;
 var userGuess;
+var timer;
+var currentTime;
+
+var highScore = [
+  {
+    tries: 10,
+    date: null,
+    time: 100,
+    number: null,
+  },
+  {
+    tries: 20,
+    date: null,
+    time: 90,
+    number: null,
+  },
+  {
+    tries: 30,
+    date: null,
+    time: 80,
+    number: null,
+  },
+  {
+    tries: 40,
+    date: null,
+    time: 70,
+    number: null,
+  },
+  {
+    tries: 50,
+    date: null,
+    time: 60,
+    number: null,
+  },
+];
+
+// getDateString();
+
+function setInitialLocalStorage() {
+  if (localStorage.getItem("scores") == null) {
+    localStorage.setItem("scores", JSON.stringify(highScore));
+  }
+}
+
+var currentScore = {
+  tries: 10,
+  date: "June 8",
+  time: 50,
+  number: 85,
+};
+
+setInitialLocalStorage();
+setHighScores();
+setScoresTable();
+
+function setHighScores() {
+  scoresFromStorage = JSON.parse(localStorage.getItem("scores"));
+  // console.log(scoresFromStorage);
+  for (var i = 0; i < scoresFromStorage.length; i++) {
+    if (scoresFromStorage[i].tries == currentScore.tries) {
+      // scoresFromStorage.splice(i, 0, currentScore);
+
+      if (scoresFromStorage[i].time > currentScore.time) {
+        scoresFromStorage.splice(i, 0, currentScore);
+        break;
+      }
+      break;
+    }
+    if (scoresFromStorage[i].tries == null) {
+      scoresFromStorage.splice(i, 0, currentScore);
+      break;
+    } else if (scoresFromStorage[i].tries > currentScore.tries) {
+      scoresFromStorage.splice(i, 0, currentScore);
+      break;
+    }
+    // if (currentScore.tries < scoresFromStorage[i].tries) {
+    //   scoresFromStorage.splice(i, 0, currentScore);
+    //   return;
+    // }
+    // console.log(i);
+  }
+  scoresFromStorage.pop();
+  // console.log(scoresFromStorage);
+  // console.log(JSON.stringify(scoresFromStorage));
+  localStorage.setItem("scores", JSON.stringify(scoresFromStorage));
+  // console.log(scoresFromStorage);
+}
+
+function setScoresTable() {
+  scoresFromStorage.forEach((item, index) => {
+    $(".table-guess-count").eq(index).text(item.tries);
+    $(".table-date").eq(index).text(item.date);
+    $(".table-time").eq(index).text(convertToDurationString(item.time));
+    $(".table-number").eq(index).text(item.number);
+  });
+}
 
 // $(".tries").toggle();
 // $(".tries-text").toggle();
@@ -34,6 +130,7 @@ $(".restart-button").click(function (e) {
 
 $(".guess-form").submit(function (e) {
   e.preventDefault();
+
   numberOfGuesses += 1;
 
   userGuess = $(".guess-input").val();
@@ -54,6 +151,9 @@ $(".guess-form").submit(function (e) {
 });
 
 function startGame() {
+  currentTime = 0;
+  startTimer();
+
   generatedNumber = Math.floor(Math.random() * guessRange) + 1;
   currentGuessesArray = [];
   toLowArray = [];
@@ -123,4 +223,56 @@ function endGame() {
 
   $(".hint-text").removeClass("hint-show");
   $(".button-submit").attr("disabled", "");
+
+  clearInterval(timer);
+  $(".popup-time").text(convertToDurationString(currentTime));
+
+  currentScore = {
+    tries: numberOfGuesses,
+    date: getDateString(),
+    time: convertToDurationString(currentTime),
+    number: generatedNumber,
+  };
+}
+
+function startTimer() {
+  timer = setInterval(() => {
+    currentTime++;
+    // console.log(currentTime);
+  }, 1000);
+}
+
+function convertToDurationString(seconds) {
+  var min = Math.floor(seconds / 60);
+  var sec = seconds % 60;
+
+  if (seconds == null) return null;
+
+  if (seconds > 60) {
+    if (sec < 10) sec = "0" + sec;
+    return min + ":" + sec + " min";
+  } else {
+    return sec + " sec";
+  }
+}
+
+function getDateString() {
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const currentTime = new Date();
+  const month = monthNames[currentTime.getMonth()];
+  const day = currentTime.getDay();
+  return month + " " + day;
 }
