@@ -146,7 +146,6 @@ function startGame() {
   startTimer();
 
   generatedNumber = Math.floor(Math.random() * guessRange) + 1;
-  generatedNumber = 3;
   currentGuessesArray = [];
   toLowArray = [];
   toHighArray = [];
@@ -168,7 +167,7 @@ function startGame() {
 
   $(".tries").toggle();
 
-  $(".guess-input").val(3);
+  $(".guess-input").val("");
   $(".guess-input").focus();
 }
 
