@@ -147,6 +147,7 @@ $(".popup-button-continue").click(function (e) {
   e.preventDefault();
 
   $(".popup-container").toggleClass("popup-container-show");
+  // $(".popup-container").toggleClass("popup-container-hide");
   $(".popup-background").toggleClass("popup-background-show");
   $(".button-submit").removeAttr("disabled", "");
 
@@ -186,8 +187,10 @@ $(".guess-form").submit(function (e) {
 function startGame() {
   currentTime = 0;
   startTimer();
+  //$(".popup-container").toggleClass("popup-container-hide");
 
   generatedNumber = Math.floor(Math.random() * guessRange) + 1;
+  generatedNumber = 3;
   currentGuessesArray = [];
   toLowArray = [];
   toHighArray = [];
@@ -204,8 +207,8 @@ function startGame() {
 
   $(".tries").toggle();
 
-  $(".guess").val("");
-  $(".guess").focus();
+  $(".guess-input").val(3);
+  $(".guess-input").focus();
 }
 
 function showHint(isGuessHigher) {
@@ -249,6 +252,7 @@ function updateGuessesList() {
 
 function endGame() {
   $(".popup-container").toggleClass("popup-container-show");
+  // $(".popup-container").toggleClass("popup-container-hide");
   $(".popup-background").toggleClass("popup-background-show");
 
   $(".popup-number").text(generatedNumber);
