@@ -10,8 +10,10 @@ var userToHighTriesString;
 var userGuess;
 var timer;
 var currentTime;
+var currentScore;
+var scoresFromStorage;
 
-var highScore = [
+var highScore2 = [
   {
     tries: 10,
     date: null,
@@ -44,7 +46,38 @@ var highScore = [
   },
 ];
 
-// getDateString();
+var highScore = [
+  {
+    tries: null,
+    date: null,
+    time: null,
+    number: null,
+  },
+  {
+    tries: null,
+    date: null,
+    time: null,
+    number: null,
+  },
+  {
+    tries: null,
+    date: null,
+    time: null,
+    number: null,
+  },
+  {
+    tries: null,
+    date: null,
+    time: null,
+    number: null,
+  },
+  {
+    tries: null,
+    date: null,
+    time: null,
+    number: null,
+  },
+];
 
 function setInitialLocalStorage() {
   if (localStorage.getItem("scores") == null) {
@@ -52,48 +85,48 @@ function setInitialLocalStorage() {
   }
 }
 
-var currentScore = {
-  tries: 10,
-  date: "June 8",
-  time: 50,
-  number: 85,
-};
+// endGame();
+
+// var currentScore = {
+//   tries: 15,
+//   date: "June 9",
+//   time: 50,
+//   number: 85,
+// };
 
 setInitialLocalStorage();
-setHighScores();
+scoresFromStorage = JSON.parse(localStorage.getItem("scores"));
+
+// setHighScores();
 setScoresTable();
 
 function setHighScores() {
+  // console.log("currentScore - " + JSON.stringify(currentScore));
   scoresFromStorage = JSON.parse(localStorage.getItem("scores"));
-  // console.log(scoresFromStorage);
   for (var i = 0; i < scoresFromStorage.length; i++) {
     if (scoresFromStorage[i].tries == currentScore.tries) {
-      // scoresFromStorage.splice(i, 0, currentScore);
-
-      if (scoresFromStorage[i].time > currentScore.time) {
+      // console.log("tries == tries");
+      if (scoresFromStorage[i].time > currentScore.time || scoresFromStorage[i].time == currentScore.time) {
+        // console.log("time > time || time == time");
         scoresFromStorage.splice(i, 0, currentScore);
+        scoresFromStorage.pop();
         break;
       }
-      break;
     }
     if (scoresFromStorage[i].tries == null) {
+      // console.log("tries == null");
       scoresFromStorage.splice(i, 0, currentScore);
+      scoresFromStorage.pop();
       break;
     } else if (scoresFromStorage[i].tries > currentScore.tries) {
+      // console.log("tries > tries");
       scoresFromStorage.splice(i, 0, currentScore);
+      scoresFromStorage.pop();
       break;
     }
-    // if (currentScore.tries < scoresFromStorage[i].tries) {
-    //   scoresFromStorage.splice(i, 0, currentScore);
-    //   return;
-    // }
-    // console.log(i);
   }
-  scoresFromStorage.pop();
-  // console.log(scoresFromStorage);
-  // console.log(JSON.stringify(scoresFromStorage));
+
   localStorage.setItem("scores", JSON.stringify(scoresFromStorage));
-  // console.log(scoresFromStorage);
 }
 
 function setScoresTable() {
@@ -110,7 +143,7 @@ function setScoresTable() {
 
 startGame();
 
-$(".popup-button").click(function (e) {
+$(".popup-button-continue").click(function (e) {
   e.preventDefault();
 
   $(".popup-container").toggleClass("popup-container-show");
@@ -230,9 +263,12 @@ function endGame() {
   currentScore = {
     tries: numberOfGuesses,
     date: getDateString(),
-    time: convertToDurationString(currentTime),
+    time: currentTime,
     number: generatedNumber,
   };
+
+  setHighScores();
+  setScoresTable();
 }
 
 function startTimer() {
