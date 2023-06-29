@@ -12,39 +12,7 @@ var timer;
 var currentTime;
 var currentScore;
 var scoresFromStorage;
-
-var highScore2 = [
-  {
-    tries: 10,
-    date: null,
-    time: 100,
-    number: null,
-  },
-  {
-    tries: 20,
-    date: null,
-    time: 90,
-    number: null,
-  },
-  {
-    tries: 30,
-    date: null,
-    time: 80,
-    number: null,
-  },
-  {
-    tries: 40,
-    date: null,
-    time: 70,
-    number: null,
-  },
-  {
-    tries: 50,
-    date: null,
-    time: 60,
-    number: null,
-  },
-];
+var isGoingToScoreboard;
 
 var highScore = [
   {
@@ -79,67 +47,12 @@ var highScore = [
   },
 ];
 
-function setInitialLocalStorage() {
-  if (localStorage.getItem("scores") == null) {
-    localStorage.setItem("scores", JSON.stringify(highScore));
-  }
-}
-
-// endGame();
-
-// var currentScore = {
-//   tries: 15,
-//   date: "June 9",
-//   time: 50,
-//   number: 85,
-// };
-
 setInitialLocalStorage();
+//take object values from localStorage and put it in the variable
 scoresFromStorage = JSON.parse(localStorage.getItem("scores"));
 
-// setHighScores();
+//set the initial blank scoreboard with empty cells
 setScoresTable();
-
-function setHighScores() {
-  // console.log("currentScore - " + JSON.stringify(currentScore));
-  scoresFromStorage = JSON.parse(localStorage.getItem("scores"));
-  for (var i = 0; i < scoresFromStorage.length; i++) {
-    if (scoresFromStorage[i].tries == currentScore.tries) {
-      // console.log("tries == tries");
-      if (scoresFromStorage[i].time > currentScore.time || scoresFromStorage[i].time == currentScore.time) {
-        // console.log("time > time || time == time");
-        scoresFromStorage.splice(i, 0, currentScore);
-        scoresFromStorage.pop();
-        break;
-      }
-    }
-    if (scoresFromStorage[i].tries == null) {
-      // console.log("tries == null");
-      scoresFromStorage.splice(i, 0, currentScore);
-      scoresFromStorage.pop();
-      break;
-    } else if (scoresFromStorage[i].tries > currentScore.tries) {
-      // console.log("tries > tries");
-      scoresFromStorage.splice(i, 0, currentScore);
-      scoresFromStorage.pop();
-      break;
-    }
-  }
-
-  localStorage.setItem("scores", JSON.stringify(scoresFromStorage));
-}
-
-function setScoresTable() {
-  scoresFromStorage.forEach((item, index) => {
-    $(".table-guess-count").eq(index).text(item.tries);
-    $(".table-date").eq(index).text(item.date);
-    $(".table-time").eq(index).text(convertToDurationString(item.time));
-    $(".table-number").eq(index).text(item.number);
-  });
-}
-
-// $(".tries").toggle();
-// $(".tries-text").toggle();
 
 startGame();
 
@@ -147,7 +60,6 @@ $(".popup-button-continue").click(function (e) {
   e.preventDefault();
 
   $(".popup-container").toggleClass("popup-container-show");
-  // $(".popup-container").toggleClass("popup-container-hide");
   $(".popup-background").toggleClass("popup-background-show");
   $(".button-submit").removeAttr("disabled", "");
 
@@ -184,10 +96,54 @@ $(".guess-form").submit(function (e) {
   $(".guess-input").val("");
 });
 
+// ------------------------- functions -------------------------
+
+function setInitialLocalStorage() {
+  //if the localStorage is empty, fill it with blank scoreboard
+  if (localStorage.getItem("scores") == null) {
+    localStorage.setItem("scores", JSON.stringify(highScore));
+  }
+}
+
+function setHighScores() {
+  scoresFromStorage = JSON.parse(localStorage.getItem("scores"));
+  for (var i = 0; i < scoresFromStorage.length; i++) {
+    if (scoresFromStorage[i].tries == currentScore.tries) {
+      if (scoresFromStorage[i].time > currentScore.time || scoresFromStorage[i].time == currentScore.time) {
+        putOnScoreboard(i);
+        break;
+      }
+    }
+    if (scoresFromStorage[i].tries == null) {
+      putOnScoreboard(i);
+      break;
+    } else if (scoresFromStorage[i].tries > currentScore.tries) {
+      putOnScoreboard(i);
+      break;
+    }
+  }
+
+  localStorage.setItem("scores", JSON.stringify(scoresFromStorage));
+}
+
+function putOnScoreboard(index) {
+  isGoingToScoreboard.isGoing = true;
+  isGoingToScoreboard.place = index + 1;
+  scoresFromStorage.splice(index, 0, currentScore);
+  scoresFromStorage.pop();
+}
+
+function setScoresTable() {
+  scoresFromStorage.forEach((item, index) => {
+    $(".table-guess-count").eq(index).text(item.tries);
+    $(".table-date").eq(index).text(item.date);
+    $(".table-time").eq(index).text(convertToDurationString(item.time));
+    $(".table-number").eq(index).text(item.number);
+  });
+}
+
 function startGame() {
-  currentTime = 0;
   startTimer();
-  //$(".popup-container").toggleClass("popup-container-hide");
 
   generatedNumber = Math.floor(Math.random() * guessRange) + 1;
   generatedNumber = 3;
@@ -198,6 +154,11 @@ function startGame() {
   userTriesString = "";
   userToLowTriesString = "";
   userToHighTriesString = "";
+  currentTime = 0;
+  isGoingToScoreboard = {
+    isGoing: false,
+    place: 0,
+  };
   console.log("answer is - " + generatedNumber);
 
   $(".tries-too-high").text("");
@@ -251,8 +212,20 @@ function updateGuessesList() {
 }
 
 function endGame() {
+  currentScore = {
+    tries: numberOfGuesses,
+    date: getDateString(),
+    time: currentTime,
+    number: generatedNumber,
+  };
+
+  setHighScores();
+  setScoresTable();
+
+  if (isGoingToScoreboard.isGoing) setupPopupPlaceIndicator(true, isGoingToScoreboard.place);
+  else setupPopupPlaceIndicator(false, isGoingToScoreboard.place);
+
   $(".popup-container").toggleClass("popup-container-show");
-  // $(".popup-container").toggleClass("popup-container-hide");
   $(".popup-background").toggleClass("popup-background-show");
 
   $(".popup-number").text(generatedNumber);
@@ -263,32 +236,41 @@ function endGame() {
 
   clearInterval(timer);
   $(".popup-time").text(convertToDurationString(currentTime));
+}
 
-  currentScore = {
-    tries: numberOfGuesses,
-    date: getDateString(),
-    time: currentTime,
-    number: generatedNumber,
-  };
+function setupPopupPlaceIndicator(condition, place) {
+  const suffix = ["st", "nd", "rd", "th", "th"];
+  var p = $(".popup-score");
+  var button = $(".popup-button-continue");
 
-  setHighScores();
-  setScoresTable();
+  if (condition) {
+    console.log("true");
+    p.html("This attempt goes <span class='popup-place'>5th</span> in the High Score board!");
+    button.text("great");
+    $(".popup-place").text(place + suffix[place - 1]);
+  } else {
+    console.log("false");
+    p.text("But you did not hit high score :(");
+    button.text("oh well");
+  }
 }
 
 function startTimer() {
   timer = setInterval(() => {
-    currentTime++;
-    // console.log(currentTime);
-  }, 1000);
+    currentTime += 0.01;
+  }, 10);
 }
 
 function convertToDurationString(seconds) {
-  var min = Math.floor(seconds / 60);
-  var sec = seconds % 60;
-
+  //this is for when function is filling blank scoreboard
   if (seconds == null) return null;
 
-  if (seconds > 60) {
+  var min = Math.floor(seconds / 60);
+  //takes the decimal seconds var and rounds it to exactly 2 decimal places
+  var sec = (Math.round(seconds * 100) / 100).toFixed(2);
+
+  if (seconds >= 60) {
+    sec = Math.round(sec % 60);
     if (sec < 10) sec = "0" + sec;
     return min + ":" + sec + " min";
   } else {
@@ -311,8 +293,8 @@ function getDateString() {
     "November",
     "December",
   ];
-  const currentTime = new Date();
-  const month = monthNames[currentTime.getMonth()];
-  const day = currentTime.getDay();
+  const currentDate = new Date();
+  const month = monthNames[currentDate.getMonth()];
+  const day = currentDate.getDay();
   return month + " " + day;
 }

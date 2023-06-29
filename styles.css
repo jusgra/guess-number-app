@@ -374,3 +374,7 @@ input::-webkit-inner-spin-button {
     color: #0F6292;
     font-size: 2.5rem;
 }
+
+.popup-place {
+    font-size: 1.5rem;
+}
