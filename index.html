@@ -38,7 +38,7 @@
         <table>
           <tr>
             <th>#</th>
-            <th>Tries Count</th>
+            <th>Guesses</th>
             <th>Time</th>
             <th>Date</th>
             <th>Number</th>
@@ -79,11 +79,12 @@
             <td class="table-number">100</td>
           </tr>
         </table>
+        <button class="table-button-continue" type="submit">continue</button>
       </div>
 
       <form class="guess-form">
         <div class="hint-text">too&nbsp;<span class="to-high">high</span></div>
-        <input class="guess-input" type="number" required placeholder="guess" min="0" max="100" value="3" />
+        <input class="guess-input" type="number" required placeholder="guess" min="0" max="100" />
         <button class="guess-button" type="submit">submit</button>
       </form>
 

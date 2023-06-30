@@ -66,6 +66,23 @@ $(".popup-button-continue").click(function (e) {
   $(".guess-form").toggle();
 });
 
+$(".table-button-continue").click(function (e) {
+  e.preventDefault();
+
+  $(".table-container").toggleClass("table-container-show");
+  $(".popup-background").removeClass("popup-background-show");
+  $(".button-submit").removeAttr("disabled", "");
+
+  $(".guess-form").toggle();
+});
+
+$(".popup-button-scores").click(function (e) {
+  e.preventDefault();
+
+  $(".popup-container").toggleClass("popup-container-show");
+  $(".table-container").toggleClass("table-container-show");
+});
+
 $(".restart-button").click(function (e) {
   e.preventDefault();
 
