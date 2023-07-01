@@ -33,15 +33,129 @@ button:hover {
 }
 
 .title {
-    grid-column: span 3;
-
-    padding: 0 7%;
-    padding-top: 3%;
+    grid-area: 1/1/2/4;
+    padding: 3% 7% 0;
     text-align: center;
     font-family: 'Press Start 2P', cursive;
     font-size: 4rem;
     color: #FFED00;
     align-items: flex-start;
+}
+
+/* ----------- HIGH SCORE TABLE ------------- */
+
+.table-container {
+    top: -200%;
+    left: 50%;
+    width: 70%;
+    height: 50%;
+    background-color: #16FF00;
+    border: 10px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    z-index: 6;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.2s 0.2s;
+    animation: showdown 0.4s;
+}
+
+.table-container-show {
+    top: 50%;
+    opacity: 1;
+    animation: showup 0.5s;
+}
+
+@keyframes showup {
+    0% {
+        top: 0%;
+        opacity: 0;
+    }
+
+    50% {
+        top: 55%;
+        opacity: 0.9;
+    }
+
+    100% {
+        top: 50%;
+        opacity: 1;
+    }
+}
+
+@keyframes showdown {
+    0% {
+        top: 50%;
+    }
+
+    50% {
+        top: 55%;
+    }
+
+    100% {
+        top: 35%;
+    }
+}
+
+table {
+    width: 60%;
+    height: 70%;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.table-button-continue {
+    background-color: #000000;
+    width: 45%;
+    height: 15%;
+    border-radius: 15px;
+    color: #F9E0BB;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    border: none;
+    padding: 0;
+}
+
+td {
+    background-color: #0F6292;
+    color: #FFED00;
+}
+
+th {
+    font-style: italic;
+    color: white;
+    background-color: rgb(63, 63, 63);
+    font-weight: 100;
+}
+
+.table-guess-count {
+    font-size: 1.5rem;
+}
+
+tr td:first-of-type {
+    font-style: italic;
+    color: white;
+    background-color: rgb(63, 63, 63);
+}
+
+th:first-of-type {
+    border-top-left-radius: 10px;
+    width: 50px;
+}
+
+th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
 }
 
 /* -------------- GUESS INPUT --------------- */
@@ -81,7 +195,6 @@ button:hover {
     font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
     transition: background-color 0.3s;
-    z-index: 1;
 }
 
 .restart-div {
@@ -152,7 +265,7 @@ input::-webkit-inner-spin-button {
 
 .tries-numbers {
     display: grid;
-    grid-template: 1fr 200px / repeat(4, 1fr);
+    grid-template: 1fr 2fr / repeat(4, 1fr);
     background-color: #000000;
     border: 10px solid rgb(54, 54, 54);
     height: 90%;
@@ -217,44 +330,50 @@ input::-webkit-inner-spin-button {
 /* ------------ POPUP BACKGROUND ------------ */
 
 .popup-background {
-    visibility: hidden;
     position: fixed;
     height: 100vh;
     width: 100vw;
     background-color: #000000bb;
     z-index: 3;
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.5s;
+    pointer-events: none;
 }
 
 .popup-background-show {
-    visibility: visible;
+    pointer-events: all;
     opacity: 1;
 }
 
 /* ----------------- POPUP ------------------ */
 
 .popup-container {
-    visibility: hidden;
     position: fixed;
-    display: flex;
     justify-content: space-evenly;
     flex-direction: column;
-    top: 50%;
+
     left: 50%;
-    width: 60%;
+    width: 70%;
     height: 50%;
-    transform: translate(-50%, -50%);
     background-color: #16FF00;
     border-radius: 20px;
     z-index: 4;
     border: 10px solid rgb(0, 0, 0);
+    text-align: center;
+
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    top: 65%;
+    opacity: 0;
+    transition: opacity 0.2s 0.2s;
+    animation: slidedown 0.4s;
 }
 
 .popup-container-show {
-    visibility: visible;
-    animation-name: slideup;
-    animation-duration: 0.3s;
+    pointer-events: all;
+    opacity: 1;
+    top: 50%;
+    animation: slideup 0.4s;
 }
 
 @keyframes slideup {
@@ -274,16 +393,49 @@ input::-webkit-inner-spin-button {
     }
 }
 
-.popup-button {
+@keyframes slidedown {
+    0% {
+        top: 50%;
+    }
+
+    50% {
+        top: 45%;
+    }
+
+    100% {
+        top: 65%;
+    }
+}
+
+.popup-buttons-container {
+    width: 100%;
+    height: 15%;
+}
+
+.popup-button-continue {
     background-color: #000000;
-    width: 50%;
-    height: 20%;
-    border-radius: 20px;
+    width: 45%;
+    height: 100%;
+    border-radius: 15px 0 0 15px;
     color: #F9E0BB;
     font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
     transition: background-color 0.3s;
     border: none;
+    padding: 0;
+}
+
+.popup-button-scores {
+    background-color: #000000;
+    width: 45%;
+    height: 100%;
+    border-radius: 0 15px 15px 0;
+    color: #F9E0BB;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    transition: background-color 0.3s;
+    border: none;
+    padding: 0;
 }
 
 .popup-container p {
@@ -307,6 +459,15 @@ input::-webkit-inner-spin-button {
     font-size: 2rem;
 }
 
-.popup-tries {
+.popup-tries,
+.popup-time {
     color: #0F6292;
+    font-size: 2.5rem;
 }
+
+.popup-place {
+    font-size: 1.5rem;
+}
+
+
+@media (max-width: 1200px) {}
