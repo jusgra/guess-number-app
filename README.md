@@ -13,8 +13,15 @@
 - Nice pop-up at the end of the game
 
 ### June 26th update⬆️
-- Way cleaner code;
+- Way cleaner code
 - Removed unecessary CSS and JS
 - Little HTML restructuring
 - Changed the bottom info panel logic and appearance
 - Changed a few colors to better match the background and other elements
+
+### June 30th update⬆️
+- High Scores board added with all logic and results, that works on a browser's local storage
+- New pop-up that shows high scores after the game ends
+- EndGame pop-up now tells time you took to guess the number, and the place you get on a scoreboard
+- Improved pop-up open/close animations
+- Code refactors
