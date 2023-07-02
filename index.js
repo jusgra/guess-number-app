@@ -110,7 +110,7 @@ $(".guess-form").submit(function (e) {
 
   updateGuessesList();
 
-  // $(".guess-input").val("");
+  $(".guess-input").val("");
 });
 
 // ------------------------- functions -------------------------
