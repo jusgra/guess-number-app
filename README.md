@@ -25,3 +25,7 @@
 - EndGame pop-up now tells time you took to guess the number, and the place you get on a scoreboard
 - Improved pop-up open/close animations
 - Code refactors
+
+### July 2nd update⬆️
+- Implemented one level responsive layout with media queries
+- Fixed high scores dates
