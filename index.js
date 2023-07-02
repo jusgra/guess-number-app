@@ -110,7 +110,7 @@ $(".guess-form").submit(function (e) {
 
   updateGuessesList();
 
-  $(".guess-input").val("");
+  // $(".guess-input").val("");
 });
 
 // ------------------------- functions -------------------------
@@ -311,6 +311,6 @@ function getDateString() {
   ];
   const currentDate = new Date();
   const month = monthNames[currentDate.getMonth()];
-  const day = currentDate.getDay();
+  const day = currentDate.getDate();
   return month + " " + day;
 }
